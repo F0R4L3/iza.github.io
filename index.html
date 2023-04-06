@@ -348,10 +348,11 @@ function fetchQuote() {
     // Fetch a new quote every 30 seconds
     setInterval(fetchQuote, 30000);
 document.body.style.zoom = "100%";
-window.addEventListener("load", function() {
+  function checkZoomLevel() {
     var zoomLevel = Math.round(window.devicePixelRatio * 100);
     if (zoomLevel !== 100) {
       var overlay = document.createElement("div");
+      var text = document.createElement("div");
       overlay.style.position = "fixed";
       overlay.style.top = "0";
       overlay.style.left = "0";
@@ -363,11 +364,39 @@ window.addEventListener("load", function() {
       overlay.style.color = "white";
       overlay.style.fontSize = "2em";
       overlay.style.textAlign = "center";
-      overlay.innerHTML = "Please set your zoom level to 60%";
+      overlay.innerHTML = "Please set your zoom level to 100%, then reload";
+      overlay.id = "zoom-level-overlay";
+      text.style.position = "fixed";
+      text.style.top = "42px";
+      text.style.left = "0";
+      text.style.width = "100%";
+      text.style.height = "100%";
+      text.style.backgroundColor = "transparent";
+      text.style.opacity = "1";
+      text.style.zIndex = "9999";
+      text.style.color = "white";
+      text.style.fontSize = "1em";
+      text.style.textAlign = "center";
+      text.innerHTML = "Because the whole shit is broken when the zoom is not 100% for some reason, and I will fix this in the future.... *If only I'm not procastinating again* ";
+      text.id="gay";
       document.body.appendChild(overlay);
+      document.body.appendChild(text);
+    } else {
+      var overlay = document.getElementById("zoom-level-overlay");
+      var text = document.getElementById("gay");
+      if (overlay) {
+        document.body.removeChild(overlay);
+        document.body.removeChild(text);
+      }
+      if (text) {
+        document.body.removeChild(overlay);
+        document.body.removeChild(text);
+      }
     }
-  });
-
+  }
+  window.addEventListener("resize", checkZoomLevel);
+  window.matchMedia('(resolution: 1dppx)').addListener(checkZoomLevel);
+  checkZoomLevel();
 </script>
 </body>
 </html>
