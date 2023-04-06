@@ -16,6 +16,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 </head>
 <body>
+  <audio id="myAudio" src="path/to/audio/file.mp3" autoplay></audio>
     <div id="u-container">
         <div id="intro-container" class="glassmorphism common-color">
             <div id="banner" >
@@ -51,6 +52,11 @@
                         <div class="tagz" id="tags1">Hacker</div>
                         <div class="tagz" id="tags1">Spy</div> 
                         <div class="tagz" id="tags2">Mfer</div>
+                    </div>
+                    <div>
+                      <p class="time">My Timezone: <span id="id-tmzn" class="time"></span></p>
+                      <p class="time">Your Timezone: <span id="user-tmzn" class="time"></span></p>
+                      <p class="time">Our Timezone Differences: <span id="tmzn-diff" class="time"></span></p>
                     </div>
                 </div>
             </div>
@@ -396,7 +402,25 @@ document.body.style.zoom = "100%";
   }
   window.addEventListener("resize", checkZoomLevel);
   window.matchMedia('(resolution: 1dppx)').addListener(checkZoomLevel);
-  checkZoomLevel();
+
+  const websiteTmzn = '+07:00'; // replace this with your website's GMT timezone
+      const d = new Date();
+      const userTmzn = d.toString().match(/([-\+][0-9]{1,2})(?::([0-9]{2}))?/)[1]; // get the user's timezone offset
+      const userTmznMin = d.toString().match(/([-\+][0-9]{1,2})(?::([0-9]{2}))?/)[2] || '00'; // get the user's timezone offset in minutes
+      const tmznDiff = parseFloat(userTmzn) + parseFloat(userTmznMin)/60 - parseFloat(websiteTmzn); // calculate the timezone difference
+      
+      window.onload = function() {
+        const tmznElems = document.getElementsByClassName('time');
+        for (let i = 0; i < tmznElems.length; i++) {
+          if (tmznElems[i].id === 'id-tmzn') {
+            tmznElems[i].textContent = websiteTmzn;
+          } else if (tmznElems[i].id === 'user-tmzn') {
+            tmznElems[i].textContent = userTmzn + ':' + userTmznMin;
+          } else if (tmznElems[i].id === 'tmzn-diff') {
+            tmznElems[i].textContent = tmznDiff.toFixed(2);
+          }
+        }
+      };
 </script>
 </body>
 </html>
@@ -443,6 +467,12 @@ document.body.style.zoom = "100%";
     opacity: 1;
     animation: circle-wave  3s ease-in-out infinite;
     z-index: 999;
+}
+
+.time {
+  margin-bottom: 0px;
+  font-size: 12px;
+  color:rgb(66, 151, 255)
 }
 
 @keyframes circle-wave {
