@@ -350,7 +350,7 @@ function fetchQuote() {
 document.body.style.zoom = "100%";
   function checkZoomLevel() {
     var zoomLevel = Math.round(window.devicePixelRatio * 100);
-    if (zoomLevel !== 100) {
+    if (zoomLevel < 99 || zoomLevel > 101) {
       var overlay = document.createElement("div");
       var text = document.createElement("div");
       overlay.style.position = "fixed";
