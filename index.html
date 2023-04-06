@@ -347,10 +347,10 @@ function fetchQuote() {
 
     // Fetch a new quote every 30 seconds
     setInterval(fetchQuote, 30000);
-document.body.style.zoom = "60%";
+document.body.style.zoom = "100%";
 window.addEventListener("load", function() {
     var zoomLevel = Math.round(window.devicePixelRatio * 100);
-    if (zoomLevel !== 60) {
+    if (zoomLevel !== 100) {
       var overlay = document.createElement("div");
       overlay.style.position = "fixed";
       overlay.style.top = "0";
